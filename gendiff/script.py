@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # скрипт игры нахождения наибольшего общего делителя
-import gendiff.cli as cli
+import gendiff.gendiff as cli
 
 
 def main():
-    cli.arg()
+    cli.generate_diff()
 
 
 if __name__ == '__main__':
