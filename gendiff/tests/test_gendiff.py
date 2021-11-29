@@ -1,11 +1,12 @@
+import os
 import sys
 
 import argparse
 
 import gendiff.gendiff as g
 
-FIRST_FILE = 'gendiff/tests/fixtures/file1.json'
-SECOND_FILE = 'gendiff/tests/fixtures/file2.json'
+FIRST_FILE = 'file1.json'
+SECOND_FILE = 'file2.json'
 FIRST_DATA = {
     "host": "hexlet.io",
     "timeout": 50,
@@ -26,6 +27,9 @@ DIFF_REPORT = """{
   + verbose: True
 }"""
 
+def get_fixture_path(file_name):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(current_dir, 'fixtures', file_name)
 
 def test_prepare_argparse_object():
     parser = g.prepare_argparse_object()
@@ -37,8 +41,8 @@ def test_prepare_argparse_object():
 
 def test_get_data_from_json():
     assert g.get_data_from_json("") == {}
-    assert g.get_data_from_json(FIRST_FILE) == FIRST_DATA
-    assert g.get_data_from_json(SECOND_FILE) == SECOND_DATA
+    assert g.get_data_from_json(get_fixture_path(FIRST_FILE)) == FIRST_DATA
+    assert g.get_data_from_json(get_fixture_path(SECOND_FILE)) == SECOND_DATA
 
 
 def test_generate_difference_line():
@@ -64,5 +68,7 @@ def test_generate_difference_report():
 
 
 def test_generate_diff():
-    sys.argv = ["test", FIRST_FILE, SECOND_FILE]
+    file1 = get_fixture_path(FIRST_FILE)
+    file2 = get_fixture_path(SECOND_FILE)
+    sys.argv = ["test", file1, file2]
     assert g.generate_diff() == DIFF_REPORT
