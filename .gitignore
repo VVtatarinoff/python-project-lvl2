@@ -8,4 +8,5 @@ coverage.xml
 .pytest_cache/
 .vim
 .vscode/
-*.json
+file1*
+file2*

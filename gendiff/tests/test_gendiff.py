@@ -5,8 +5,8 @@ import argparse
 
 import gendiff.gendiff as g
 
-FIRST_FILE = 'file1test.json'
-SECOND_FILE = 'file2test.json'
+FIRST_FILE = 'test1.json'
+SECOND_FILE = 'test2.json'
 FIRST_DATA = {
     "host": "hexlet.io",
     "timeout": 50,
