@@ -3,13 +3,18 @@ import json
 import argparse
 
 
-def set_argparse_object():
+ARGUMENTS = [
+    ['-f, -format', {'metavar': 'Format', 'help': 'set format of output'}],
+    ['first_file', {}],
+    ['second_file', {}],
+]
+
+
+def prepare_argparse_object():
     parser = argparse.ArgumentParser(description='Generate diff',
                                      prog='gendiff')
-    parser.add_argument('first_file')
-    parser.add_argument('second_file')
-    parser.add_argument('-f', '-format', metavar='FORMAT',
-                        help='set format of output')
+    for argument in ARGUMENTS:
+        parser.add_argument(argument[0], **argument[1])
     return parser
 
 
@@ -19,27 +24,31 @@ def get_data_from_json(file_name):
     return args_dict
 
 
-def line_difference(sign, key, value):
-    return f"  {sign} {key}: {value}\n"
+def line_difference(args, char=" ", count_char=2, depth=0):
+    block = ""
+    tab = char * count_char * (1 + depth)
+    for line in args:
+        block += f"{tab}{line[0]} {line[1]}: {line[2]}\n"
+    return block
 
 
 def generate_diff():
-    parser = set_argparse_object()
-    args = parser.parse_args()
+    args = prepare_argparse_object().parse_args()
     first_arguments = get_data_from_json(args.first_file)
     second_arguments = get_data_from_json(args.second_file)
     keys = sorted(list(first_arguments.keys() | second_arguments.keys()))
     differences = "{\n"
     for key in keys:
         if key not in first_arguments:
-            differences += line_difference('+', key, second_arguments[key])
+            block = [['+', key, second_arguments[key]]]
         elif key not in second_arguments:
-            differences += line_difference('-', key, first_arguments[key])
+            block = [['-', key, first_arguments[key]]]
         elif first_arguments[key] == second_arguments[key]:
-            differences += line_difference(' ', key, first_arguments[key])
+            block = [[' ', key, first_arguments[key]]]
         else:
-            differences += line_difference('-', key, first_arguments[key])
-            differences += line_difference('+', key, second_arguments[key])
+            block = [['-', key, first_arguments[key]]]
+            block += [['+', key, second_arguments[key]]]
+        differences += line_difference(block)
     differences += '}'
     print(differences)
     return differences

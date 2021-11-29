@@ -6,6 +6,12 @@ gendiff:
 gentest:
 	poetry run gendiff file1.json file2.json
 
+tests:
+	poetry run pytest -v
+
+coverage:
+	poetry run pytest --cov=gendiff
+
 build:
 	poetry build
 publish:
@@ -16,4 +22,4 @@ package-uninstall:
 	python3 -m pip uninstall hexlet-code
 lint:
 	poetry run flake8 gendiff
-.PHONY: install gendiff build publish package-install
+.PHONY: install gendiff build publish package-install tests coverage gentest
