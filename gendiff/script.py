@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# скрипт игры нахождения наибольшего общего делителя
 import gendiff.gendiff as cli
 
 
