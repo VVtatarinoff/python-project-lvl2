@@ -2,7 +2,7 @@ import json
 from itertools import chain
 
 
-def generate_json_report(comparison, depth=0, supress_sign=None):
+def generate_stylish_report(comparison, depth=0, supress_sign=None):
     CHAR = " "
     COUNT_CHARS = 2
     if not isinstance(comparison, dict):
@@ -20,9 +20,9 @@ def generate_json_report(comparison, depth=0, supress_sign=None):
         if sign == '?':
             sign = ' '
         indent = deep_indent + sign + CHAR
-        converted_value = generate_json_report(value,
-                                               depth + 1,
-                                               further_supress)
+        converted_value = generate_stylish_report(value,
+                                                  depth + 1,
+                                                  further_supress)
         lines.append(f'{indent}{key[0]}: {converted_value}')
     result = chain("{", lines, [current_indent + "}"])
     return '\n'.join(result)

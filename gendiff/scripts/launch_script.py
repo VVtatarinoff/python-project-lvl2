@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import gendiff.generate_diff as g
+import gendiff.gendiff as g
 import argparse
 
 
@@ -20,7 +20,7 @@ def prepare_argparse_object():
 
 def main():
     args = prepare_argparse_object().parse_args()
-    report = g.generate_report(args.first_file, args.second_file)
+    report = g.generate_diff(args.first_file, args.second_file)
     print(report)
 
 

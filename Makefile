@@ -4,13 +4,16 @@ gendiff:
 	poetry run gendiff -h
 
 gentest1:
-	poetry run gendiff gendiff/tests/fixtures/test01.json gendiff/tests/fixtures/test02.json
+	poetry run gendiff tests/fixtures/test01.json tests/fixtures/test02.json
 
 gentest2:
-	poetry run gendiff gendiff/tests/fixtures/test11.json gendiff/tests/fixtures/test12.json
+	poetry run gendiff tests/fixtures/test11.json tests/fixtures/test12.json
 
 gentest3:
-	poetry run gendiff gendiff/tests/fixtures/test21.yml gendiff/tests/fixtures/test22.yaml
+	poetry run gendiff tests/fixtures/test21.yml tests/fixtures/test22.yaml
+
+gentest4:
+	poetry run gendiff tests/fixtures/test31.yml tests/fixtures/test32.yaml
 
 tests:
 	poetry run coverage run -m pytest -vv
