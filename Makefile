@@ -13,10 +13,10 @@ gentest3:
 	poetry run gendiff gendiff/tests/fixtures/test21.yml gendiff/tests/fixtures/test22.yaml
 
 tests:
-	poetry run pytest -vv
+	poetry run coverage run -m pytest -vv
 
 coverage:
-	poetry run pytest --cov=gendiff
+	poetry run coverage report
 
 build:
 	poetry build
