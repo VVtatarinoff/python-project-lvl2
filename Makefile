@@ -6,6 +6,12 @@ gendiff:
 gentest1:
 	poetry run gendiff gendiff/tests/fixtures/test01.json gendiff/tests/fixtures/test02.json
 
+gentest2:
+	poetry run gendiff gendiff/tests/fixtures/test11.json gendiff/tests/fixtures/test12.json
+
+gentest3:
+	poetry run gendiff gendiff/tests/fixtures/test21.yml gendiff/tests/fixtures/test22.yaml
+
 tests:
 	poetry run pytest -vv
 
@@ -22,4 +28,4 @@ package-uninstall:
 	python3 -m pip uninstall hexlet-code
 lint:
 	poetry run flake8 gendiff
-.PHONY: install gendiff build publish package-install tests coverage gentest1
+.PHONY: install gendiff build publish package-install tests coverage gentest1 gentest2 gentest3

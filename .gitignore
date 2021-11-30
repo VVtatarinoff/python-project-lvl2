@@ -10,3 +10,4 @@ coverage.xml
 .vscode/
 file1*
 file2*
+tests/
