@@ -3,11 +3,11 @@ install:
 gendiff:
 	poetry run gendiff -h
 
-gentest:
-	poetry run gendiff file1.json file2.json
+gentest1:
+	poetry run gendiff gendiff/tests/fixtures/test01.json gendiff/tests/fixtures/test02.json
 
 tests:
-	poetry run pytest -v
+	poetry run pytest -vv
 
 coverage:
 	poetry run pytest --cov=gendiff
@@ -22,4 +22,4 @@ package-uninstall:
 	python3 -m pip uninstall hexlet-code
 lint:
 	poetry run flake8 gendiff
-.PHONY: install gendiff build publish package-install tests coverage gentest
+.PHONY: install gendiff build publish package-install tests coverage gentest1

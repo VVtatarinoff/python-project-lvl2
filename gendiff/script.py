@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import gendiff.gendiff as cli
+import gendiff.generate_diff as cli
 
 
 def main():
