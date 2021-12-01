@@ -1,5 +1,6 @@
 from itertools import chain
 
+from gendiff.parsing.parsing import ADD, DEL, KEPT, CHANGED
 
 RENAME_DICT = {'+': "Property '{0}' was added with value: {1}",
                '-': "Property '{0}' was removed"}
@@ -34,7 +35,7 @@ def walker(data, pedigree=[]):
     line = []
     for key, value in data.items():
         sign = key[1]
-        if sign == ' ':
+        if sign == KEPT:
             continue
         name = key[0]
         parent = pedigree + [name]
@@ -42,11 +43,11 @@ def walker(data, pedigree=[]):
         opposite = opposite_case(sign, name)
         changed = convert_value(value)
         if opposite in data:
-            if sign == '+':
+            if sign == ADD:
                 deleted = convert_value(data[opposite])
                 line.append(UPDATED.format(full_name, deleted, changed))
             continue
-        if sign == "?":
+        if sign == CHANGED:
             line += chain(walker(value, parent))
         else:
             line.append(RENAME_DICT[sign].format(full_name, changed))

@@ -1,13 +1,13 @@
 import os
 
 
-"""индексы 0 и 1 - входные файлы, 2 - целевой отчет в stylish 
+"""индексы 0 и 1 - входные файлы, 2 - целевой отчет в stylish, 3 - отчет json
 3 - целевой отчет в plain"""
-FILES_AND_RESULTS = [['test01.json', 'test02.json', 'result00.txt', 'plain00.txt'],
-                     ['test11.json', 'test12.json', 'result10.txt', 'plain10.txt'],
-                     ['test21.yml', 'test22.yaml', 'result00.txt', 'plain00.txt'],
-                     ['test31.yml', 'test32.yaml', 'result10.txt', 'plain10.txt'],
-                     ['test11.json', 'test32.yaml', 'result10.txt', 'plain10.txt']]
+FILES_AND_RESULTS = [['test01.json', 'test02.json', 'result00.txt', 'plain00.txt', 'json00.txt'],
+                     ['test11.json', 'test12.json', 'result10.txt', 'plain10.txt', 'json10.txt'],
+                     ['test21.yml', 'test22.yaml', 'result00.txt', 'plain00.txt', 'json00.txt'],
+                     ['test31.yml', 'test32.yaml', 'result10.txt', 'plain10.txt', 'json10.txt'],
+                     ['test11.json', 'test32.yaml', 'result10.txt', 'plain10.txt', 'json10.txt']]
 # patterns data
 PLAIN1 = {'host': 'hexlet.io',
           'timeout': 50,
@@ -114,12 +114,15 @@ def get_test_data():
         normalized_paths.append([get_fixture_path(check_data[0]),
                                  get_fixture_path(check_data[1]),
                                  get_fixture_path(check_data[2]),
-                                 get_fixture_path(check_data[3])])
+                                 get_fixture_path(check_data[3]),
+                                 get_fixture_path(check_data[4])])
         with open(normalized_paths[-1][2]) as file:
             result_stylish = file.read()
         with open(normalized_paths[-1][3]) as file:
             result_plain = file.read()
+        with open(normalized_paths[-1][4]) as file:
+            result_json = file.read()
         data1 = pattern_to_file[check_data[0]]
         data2 = pattern_to_file[check_data[1]]
-        data_and_results.append([data1, data2, result_stylish, result_plain])
+        data_and_results.append([data1, data2, result_stylish, result_plain, result_json])
     return normalized_paths, data_and_results

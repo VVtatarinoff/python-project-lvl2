@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-import gendiff.gendiff as g
 import argparse
+
+import gendiff.gendiff as g
 from gendiff.formating.format_report import CHOICES
 
 
