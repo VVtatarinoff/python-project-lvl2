@@ -7,7 +7,7 @@ from gendiff.formating.format_report import CHOICES, DEFAULT_STYLE
 
 ARGUMENTS = [
     [('-f', '--format'), {'metavar': 'FORMAT', 'help': 'set format of output',
-                          'default': DEFAULT_STYLE, 
+                          'default': DEFAULT_STYLE,
                           "choices": list(CHOICES.keys())}],
     [('first_file', ), {}],
     [('second_file', ), {}],
