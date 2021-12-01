@@ -1,12 +1,5 @@
-import json
-
 from gendiff.formating.common_json_stylish import generate_json_stylish
-
-
-def convert_for_stylish(value):
-    if not isinstance(value, str):
-        return json.JSONEncoder().encode(value)
-    return value
+from gendiff.formating.converters import convert_for_stylish
 
 
 def generate_stylish(comparison):

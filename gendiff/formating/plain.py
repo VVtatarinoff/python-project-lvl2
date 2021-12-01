@@ -1,6 +1,7 @@
 from itertools import chain
 
 from gendiff.parsing.parsing import ADD, DEL, KEPT, CHANGED
+from gendiff.formating.converters import convert_for_stylish
 
 RENAME_DICT = {'+': "Property '{0}' was added with value: {1}",
                '-': "Property '{0}' was removed"}
@@ -12,15 +13,12 @@ def is_dict(argument):
 
 
 def convert_value(argument):
-    replacements = {True: 'true', False: 'false', None: 'null'}
     complex_formats = [list, dict, set, tuple]
     if isinstance(argument, str):
         return f"'{argument}'"
     if type(argument) in complex_formats:
         return "[complex value]"
-    if argument in replacements:
-        return replacements[argument]
-    return str(argument)
+    return str(convert_for_stylish(argument))
 
 
 def opposite_case(sign, value):
