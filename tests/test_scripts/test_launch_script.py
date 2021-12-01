@@ -8,6 +8,7 @@ ARGUMENT2 = 'second_file'
 
 normalized_paths, _ = get_test_data()
 
+
 def test_prepare_argparse_object():
     parser = scr.prepare_argparse_object()
     assert isinstance(parser, argparse.ArgumentParser)
@@ -19,4 +20,4 @@ def test_prepare_argparse_object():
 def test_main():
     for value in normalized_paths:
         sys.argv = ["test", value[0], value[1]]
-        assert scr.main() == None
+        assert scr.main() is None

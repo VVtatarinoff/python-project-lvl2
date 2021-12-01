@@ -1,5 +1,7 @@
 import gendiff.parsing.parsing as pars
-from tests.prepare_test_data import PLAIN1, PLAIN2, COMPLEX1, COMPLEX2, PLAIN_COMPARE, COMPLEX_COMPARE
+from tests.prepare_test_data import PLAIN1, PLAIN2
+from tests.prepare_test_data import COMPLEX1, COMPLEX2
+from tests.prepare_test_data import PLAIN_COMPARE, COMPLEX_COMPARE
 
 
 def test_parse_data():

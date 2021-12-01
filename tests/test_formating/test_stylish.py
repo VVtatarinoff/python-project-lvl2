@@ -1,7 +1,6 @@
 import gendiff.formating.stylish as styl
-from tests.prepare_test_data import PLAIN1, PLAIN2, COMPLEX1, COMPLEX2, PLAIN_COMPARE, COMPLEX_COMPARE
+from tests.prepare_test_data import PLAIN_COMPARE, COMPLEX_COMPARE
 from tests.prepare_test_data import get_test_data
-
 
 
 def test_generate_stylish():
