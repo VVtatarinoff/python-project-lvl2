@@ -1,13 +1,12 @@
-import os
 import sys
 import gendiff.scripts.launch_script as scr
 import argparse
-from .prepare_test_data import get_test_data
+from tests.prepare_test_data import get_test_data
 
 ARGUMENT1 = 'first_file'
 ARGUMENT2 = 'second_file'
 
-normalized_paths, data_and_results = get_test_data()
+normalized_paths, _ = get_test_data()
 
 def test_prepare_argparse_object():
     parser = scr.prepare_argparse_object()
@@ -18,6 +17,6 @@ def test_prepare_argparse_object():
 
 
 def test_main():
-    for index, value in enumerate(normalized_paths):
+    for value in normalized_paths:
         sys.argv = ["test", value[0], value[1]]
         assert scr.main() == None

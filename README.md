@@ -11,5 +11,9 @@
 
 ### Second step - adding working with yaml files in package
 [![asciicast](https://asciinema.org/a/0ITCH2p4zbInE3jZpaI6dL1ZQ.svg)](https://asciinema.org/a/0ITCH2p4zbInE3jZpaI6dL1ZQ)
+
 ### Third step - working with complex structures
 [![asciicast](https://asciinema.org/a/gZOR6zbUIWtxpwq6oor6TZB1Q.svg)](https://asciinema.org/a/gZOR6zbUIWtxpwq6oor6TZB1Q)
+
+### Fourh step - implementing 'plain' format of output
+[![asciicast](https://asciinema.org/a/zEO9qJHXvEJubse2EqYj3B8gN.svg)](https://asciinema.org/a/zEO9qJHXvEJubse2EqYj3B8gN)

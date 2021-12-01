@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 import gendiff.gendiff as g
 import argparse
+from gendiff.formating.format_report import CHOICES
 
 
 ARGUMENTS = [
-    [('-f', '--format'), {'metavar': 'FORMAT', 'help': 'set format of output'}],
+    [('-f', '--format'), {'metavar': 'FORMAT', 'help': 'set format of output',
+                          'default': None, "choices": list(CHOICES.keys())}],
     [('first_file', ), {}],
     [('second_file', ), {}],
 ]
@@ -20,7 +22,7 @@ def prepare_argparse_object():
 
 def main():
     args = prepare_argparse_object().parse_args()
-    report = g.generate_diff(args.first_file, args.second_file)
+    report = g.generate_diff(args.first_file, args.second_file, args.format)
     print(report)
 
 
