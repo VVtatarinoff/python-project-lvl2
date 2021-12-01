@@ -2,9 +2,10 @@ import gendiff.formating.stylish as styl
 import gendiff.formating.plain as plain
 import gendiff.formating.json as jsn
 
-CHOICES = {None: styl.generate_stylish,
+CHOICES = {'stylish': styl.generate_stylish,
            'plain': plain.generate_plain,
            'json': jsn.generate_json}
+DEFAULT_STYLE = 'stylish'
 
 
 def generate_report(data, style=None):

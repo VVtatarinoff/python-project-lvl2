@@ -28,7 +28,7 @@ parameters: two paths with files (first_file and second_file)
 
 options:
     -f (or --format) to choose output style:
-        None(or omitted) - stylish format
+        stylish (or omitted) - stylish format
         json - JSON format
         plain - wording description about changes
     -h (or --help) - short help about usage of command
