@@ -4,8 +4,9 @@ version = "0.1.0"
 description = "comparison of files"
 authors = ["Vladimir"]
 packages = [
-  { include = "gendiff" },
-]
+  { include = "gendiff" },]
+classifiers = ["PROGRAMMING LANGUAGE :: PYTHON :: 3.8"]
+repository= "https://github.com/VVtatarinoff/python-project-lvl2"
 
 [tool.poetry.scripts]
 gendiff = "gendiff.scripts.launch_script:main"
