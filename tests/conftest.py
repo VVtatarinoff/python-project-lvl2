@@ -1,4 +1,5 @@
 import os
+import pytest
 
 
 """индексы 0 и 1 - входные файлы, 2 - целевой отчет в stylish, 3 - отчет json
@@ -113,6 +114,7 @@ def get_fixture_path(file_name):
     return os.path.join(current_dir, 'fixtures', file_name)
 
 
+@pytest.fixture(scope='session')
 def get_test_data():
     normalized_paths = []
     data_and_results = []
@@ -133,3 +135,23 @@ def get_test_data():
         data_and_results.append([data1, data2, result_stylish,
                                 result_plain, result_json])
     return normalized_paths, data_and_results
+
+
+@pytest.fixture(scope='session')
+def get_plain_source_patterns():
+    return PLAIN1, PLAIN2
+
+
+@pytest.fixture(scope='session')
+def get_complex_source_patterns():
+    return COMPLEX1, COMPLEX2
+
+
+@pytest.fixture(scope='session')
+def get_plain_merging():
+    return PLAIN_COMPARE
+
+
+@pytest.fixture(scope='session')
+def get_complex_merging():
+    return COMPLEX_COMPARE

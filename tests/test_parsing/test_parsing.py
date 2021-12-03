@@ -1,7 +1,4 @@
 import gendiff.parsing.parsing as pars
-from tests.prepare_test_data import PLAIN1, PLAIN2
-from tests.prepare_test_data import COMPLEX1, COMPLEX2
-from tests.prepare_test_data import PLAIN_COMPARE, COMPLEX_COMPARE
 
 
 def test_parse_data():
@@ -10,5 +7,14 @@ def test_parse_data():
     assert pars.parse_data(arg1, arg2) == {}
     arg2 = {'abc': 3}
     assert pars.parse_data(arg1, arg2) == {('abc', '+'): 3}
-    assert pars.parse_data(PLAIN1, PLAIN2) == PLAIN_COMPARE
-    assert pars.parse_data(COMPLEX1, COMPLEX2) == COMPLEX_COMPARE
+
+
+def test_parse_data_plain_work(get_plain_source_patterns, get_plain_merging):
+    plain1, plain2 = get_plain_source_patterns
+    assert pars.parse_data(plain1, plain2) == get_plain_merging
+
+
+def test_parse_data_complex_work(get_complex_source_patterns,
+                                 get_complex_merging):
+    complex1, complex2 = get_complex_source_patterns
+    assert pars.parse_data(complex1, complex2) == get_complex_merging

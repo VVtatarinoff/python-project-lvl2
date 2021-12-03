@@ -1,11 +1,8 @@
-from tests.prepare_test_data import get_test_data
 import gendiff.gendiff as gen
 
 
-normalized_paths, data_and_results = get_test_data()
-
-
-def test_generate_report():
+def test_generate_report(get_test_data):
+    normalized_paths, data_and_results = get_test_data
     for index, value in enumerate(normalized_paths):
         assert gen.generate_diff(value[0],
                                  value[1]) == data_and_results[
