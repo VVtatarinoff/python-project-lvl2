@@ -3,17 +3,32 @@ import pytest
 
 
 """индексы 0 и 1 - входные файлы, 2 - целевой отчет в stylish, 3 - отчет json
-3 - целевой отчет в plain"""
-FILES_AND_RESULTS = [['test01.json', 'test02.json', 'result00.txt',
-                      'plain00.txt', 'json00.txt'],
-                     ['test11.json', 'test12.json', 'result10.txt',
-                      'plain10.txt', 'json10.txt'],
-                     ['test21.yml', 'test22.yaml', 'result00.txt',
-                      'plain00.txt', 'json00.txt'],
-                     ['test31.yml', 'test32.yaml', 'result10.txt',
-                      'plain10.txt', 'json10.txt'],
-                     ['test11.json', 'test32.yaml', 'result10.txt',
-                      'plain10.txt', 'json10.txt']]
+3 - целевой отчет в plain, 4 - отчет json"""
+FILES_AND_RESULTS = [['source_json/test01.json',
+                      'source_json/test02.json',
+                      'stylish/result00.txt',
+                      'plain/plain00.txt',
+                      'js_report/json00.txt'],
+                     ['source_json/test11.json',
+                      'source_json/test12.json',
+                      'stylish/result10.txt',
+                      'plain/plain10.txt',
+                      'js_report/json10.txt'],
+                     ['source_yml/test21.yml',
+                      'source_yml/test22.yaml',
+                      'stylish/result00.txt',
+                      'plain/plain00.txt',
+                      'js_report/json00.txt'],
+                     ['source_yml/test31.yml',
+                      'source_yml/test32.yaml',
+                      'stylish/result10.txt',
+                      'plain/plain10.txt',
+                      'js_report/json10.txt'],
+                     ['source_json/test11.json',
+                      'source_yml/test32.yaml',
+                      'stylish/result10.txt',
+                      'plain/plain10.txt',
+                      'js_report/json10.txt']]
 # patterns data
 PLAIN1 = {'host': 'hexlet.io',
           'timeout': 50,
@@ -61,15 +76,15 @@ COMPLEX2 = {'common':
               {'number': 45}},
              'fee': 100500}}
 # Matching patterns and files
-pattern_to_file = {'test01.json': PLAIN1,
-                   'test02.json': PLAIN2,
-                   'test11.json': COMPLEX1,
-                   'test12.json': COMPLEX2,
-                   'test21.yml': PLAIN1,
-                   'test22.yaml': PLAIN2,
-                   'test31.yml': COMPLEX1,
-                   'test32.yaml': COMPLEX2}
-
+pattern_to_file = {'source_json/test01.json': PLAIN1,
+                   'source_json/test02.json': PLAIN2,
+                   'source_json/test11.json': COMPLEX1,
+                   'source_json/test12.json': COMPLEX2,
+                   'source_yml/test21.yml': PLAIN1,
+                   'source_yml/test22.yaml': PLAIN2,
+                   'source_yml/test31.yml': COMPLEX1,
+                   'source_yml/test32.yaml': COMPLEX2}
+# промежуточные деревья для двух сценариев:
 PLAIN_COMPARE = {('follow', '-'): False,
                  ('host', ' '): 'hexlet.io',
                  ('proxy', '-'): '123.234.53.22',
@@ -113,27 +128,30 @@ def get_fixture_path(file_name):
     current_dir = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(current_dir, 'fixtures', file_name)
 
+# normalized_paths - абсолютные пути до проверочных файлов
+# data_and_results - данные для сравнения в виде списков
+# (два первых элемента), три последних - отчеты в разных
+# выводимых форматах
+
 
 @pytest.fixture(scope='session')
 def get_test_data():
     normalized_paths = []
     data_and_results = []
     for check_data in FILES_AND_RESULTS:
-        normalized_paths.append([get_fixture_path(check_data[0]),
-                                 get_fixture_path(check_data[1]),
-                                 get_fixture_path(check_data[2]),
-                                 get_fixture_path(check_data[3]),
-                                 get_fixture_path(check_data[4])])
-        with open(normalized_paths[-1][2]) as file:
-            result_stylish = file.read()
-        with open(normalized_paths[-1][3]) as file:
-            result_plain = file.read()
-        with open(normalized_paths[-1][4]) as file:
-            result_json = file.read()
+        file_list = []
         data1 = pattern_to_file[check_data[0]]
         data2 = pattern_to_file[check_data[1]]
-        data_and_results.append([data1, data2, result_stylish,
-                                result_plain, result_json])
+        result_list = [data1, data2]
+        for index, file in enumerate(check_data):
+            full_path = get_fixture_path(file)
+            file_list.append(full_path)
+            if index > 1:
+                with open(full_path) as f:
+                    report = f.read()
+                    result_list.append(report)
+        normalized_paths.append(file_list)
+        data_and_results.append(result_list)
     return normalized_paths, data_and_results
 
 

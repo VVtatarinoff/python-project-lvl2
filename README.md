@@ -1,4 +1,4 @@
-## Hexlet tests and linter status:
+## Tests and linter status:
 [![Maintainability](https://api.codeclimate.com/v1/badges/773d5f4a0b15c2116805/maintainability)](https://codeclimate.com/github/VVtatarinoff/python-project-lvl2/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/773d5f4a0b15c2116805/test_coverage)](https://codeclimate.com/github/VVtatarinoff/python-project-lvl2/test_coverage)
 [![Linter-check](https://github.com/VVtatarinoff/python-project-lvl2/actions/workflows/linter.yml/badge.svg)](https://github.com/VVtatarinoff/python-project-lvl2/actions/workflows/linter.yml)
@@ -56,4 +56,4 @@ This project was built using these tools:
 [![asciicast](https://asciinema.org/a/zEO9qJHXvEJubse2EqYj3B8gN.svg)](https://asciinema.org/a/zEO9qJHXvEJubse2EqYj3B8gN)
 
 ### Last step - 'json' format of output was implemented
-[![asciicast](https://asciinema.org/a/YQEYnwGGbz26E9j0PvaFSClkE.svg)](https://asciinema.org/a/YQEYnwGGbz26E9j0PvaFSClkE)
+[![asciicast](https://asciinema.org/a/4vPEU7IvT8MjyY151Q5hFEKRi.svg)](https://asciinema.org/a/4vPEU7IvT8MjyY151Q5hFEKRi)
