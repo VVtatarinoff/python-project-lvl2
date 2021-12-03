@@ -33,8 +33,6 @@ def parse_data(arg1, arg2): # noqa C901
     if not is_dict(arg2):
         return arg2
     keys = sorted(list(arg1.keys() | arg2.keys()))
-    if not keys:
-        return {}
     dif_dict = {}
     for key in keys:
         if key not in arg1:

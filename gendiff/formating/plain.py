@@ -1,6 +1,6 @@
 from itertools import chain
 
-from gendiff.parsing.parsing import ADD, KEPT, CHANGED
+from gendiff.parsing.parsing import ADD, KEPT, CHANGED, DEL
 from gendiff.formating.converters import convert_stylish
 
 RENAME_DICT = {'+': "Property '{0}' was added with value: {1}",
@@ -22,10 +22,10 @@ def convert_value(argument):
 
 
 def opposite_case(sign, value):
-    if sign == '+':
-        return (value, '-')
-    if sign == '-':
-        return (value, '+')
+    if sign == ADD:
+        return (value, DEL)
+    if sign == DEL:
+        return (value, ADD)
     return (value, 'None')
 
 

@@ -8,8 +8,8 @@
 Gendiff is a package that provide service of comparisons variables stored in two types of file:
     - JSON
     - YAML
-The package provides as terminal session work as python package to include in 3rd parties
-The output is a text report. During termainal session it output to stdout, as a function it returns string with report
+The package provides as terminal session work as python package to include in other packages
+The output is a text report. During terminal session it output to stdout, as a function it returns 'str' with report inside
 
 The package is created during educational courses at [Hexlet](https://ru.hexlet.io) step 2.
 
