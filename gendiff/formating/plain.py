@@ -3,8 +3,8 @@ from itertools import chain
 from gendiff.parsing.parsing import ADD, KEPT, CHANGED, DEL
 from gendiff.formating.converters import convert_stylish
 
-RENAME_DICT = {'+': "Property '{0}' was added with value: {1}",
-               '-': "Property '{0}' was removed"}
+RENAME_DICT = {ADD: "Property '{0}' was added with value: {1}",
+               DEL: "Property '{0}' was removed"}
 UPDATED = "Property '{0}' was updated. From {1} to {2}"
 
 
@@ -22,11 +22,10 @@ def convert_value(argument):
 
 
 def opposite_case(sign, value):
-    if sign == ADD:
-        return (value, DEL)
-    if sign == DEL:
-        return (value, ADD)
-    return (value, 'None')
+    opposite_signs = {ADD: DEL, DEL: ADD}
+    if sign in opposite_signs:
+        return (value, opposite_signs[sign])
+    return (value, object())
 
 
 def walker(data, pedigree=[]):
