@@ -90,7 +90,7 @@ def get_reports():
     for style, files in REPORTS.items():
         one_style_reports = dict()
         for pattern, path in files.items():
-            with open(get_fixture_path(path)) as file:
+            with open(get_fixture_path(path), 'r') as file:
                 one_style_reports[pattern] = file.read()
         reports[style] = one_style_reports
     return reports

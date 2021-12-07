@@ -10,7 +10,4 @@ coverage.xml
 .vscode/
 file1*
 file2*
-f1.yml
-f2.yml
-f1.json
 .idea/
