@@ -28,7 +28,8 @@ def generate_report(comparison, converter, depth=0, supress_sign=None):
                                           converter,
                                           depth + 1,
                                           further_supress)
-        lines.append(f'{indent}{output_key}: {converted_value}')
+        blank = " " if converted_value else ''
+        lines.append(f'{indent}{output_key}:{blank}{converted_value}')
     result = chain("{", lines, [current_indent + "}"])
     return '\n'.join(result)
 

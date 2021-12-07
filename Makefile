@@ -36,6 +36,9 @@ gentest10:
 gentest11:
 	poetry run gendiff tests/fixtures/source_yml/test31.yml tests/fixtures/source_yml/test32.yaml -f json
 
+gentest12:
+	poetry run gendiff tests/fixtures/source_json/f1.json tests/fixtures/source_json/f2.json
+
 tests:
 	poetry run coverage run -m pytest -vv
 
