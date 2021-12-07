@@ -34,5 +34,7 @@ def generate_report(comparison, converter, depth=0, supress_sign=None):
 
 
 def generate_stylish(comparison):
+    if not comparison:
+        return ""
     converter = convert_stylish
     return generate_report(comparison, converter)

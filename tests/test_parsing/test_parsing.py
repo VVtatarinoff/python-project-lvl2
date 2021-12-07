@@ -1,20 +1,10 @@
-import gendiff.parsing.parsing as pars
+from gendiff.parsing.parsing import parse_data as pars
 
 
-def test_parse_data():
-    arg1 = {}
-    arg2 = {}
-    assert pars.parse_data(arg1, arg2) == {}
-    arg2 = {'abc': 3}
-    assert pars.parse_data(arg1, arg2) == {('abc', '+'): 3}
-
-
-def test_parse_data_plain_work(get_plain_source_patterns, get_plain_merging):
-    plain1, plain2 = get_plain_source_patterns
-    assert pars.parse_data(plain1, plain2) == get_plain_merging
-
-
-def test_parse_data_complex_work(get_complex_source_patterns,
-                                 get_complex_merging):
-    complex1, complex2 = get_complex_source_patterns
-    assert pars.parse_data(complex1, complex2) == get_complex_merging
+def test_parse_data(get_raw_data, get_mergings):
+    assert pars({}, {}) == {}
+    for complexity, merging in get_mergings.items():
+        path1 = get_raw_data[complexity + '1']
+        path2 = get_raw_data[complexity + '2']
+        result_of_merging = pars(path1, path2)
+        assert merging == result_of_merging

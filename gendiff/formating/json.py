@@ -22,5 +22,7 @@ def generate_report(comparison, supress_sign=None):
 
 
 def generate_json(comparison):
+    if not comparison:
+        return ""
     result = generate_report(comparison)
     return json.dumps(result, sort_keys=True, indent=4)
