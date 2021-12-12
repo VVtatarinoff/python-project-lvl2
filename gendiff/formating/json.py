@@ -1,11 +1,11 @@
 import json
 
-from gendiff.parsing.parsing import ADD, DEL, KEPT, CHANGED
+from gendiff.compare_data.comparison_tree import ADD, DEL, KEPT, SPLIT
 
 SIGNS = {ADD: '+',
          DEL: '-',
          KEPT: ' ',
-         CHANGED: ' '}
+         SPLIT: ' '}
 
 
 def generate_report(comparison, supress_sign=None):

@@ -8,8 +8,11 @@ CONVERTERS = {
 
 
 def extract_raw_data(file):
+    if not file:
+        return {}
     path = file.lower()
+    with open(file) as f:
+        data = f.read()
     for key in CONVERTERS:
         if path.endswith(key):
-            return CONVERTERS[key](file)
-    return {}
+            return CONVERTERS[key](data)

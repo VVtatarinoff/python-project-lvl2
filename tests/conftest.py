@@ -21,7 +21,7 @@ REPORT_PLAIN = 'plain'
 REPORT_JSON = 'json'
 
 # json, yaml files for different scenarios
-SOURCE_FILES = [{PLAIN + '1': 'source_json/test01.json',
+SOURCE_FILES = ({PLAIN + '1': 'source_json/test01.json',
                  PLAIN + '2': 'source_json/test02.json'},
                 {COMPLEX + '1': 'source_json/test11.json',
                  COMPLEX + '2': 'source_json/test12.json'},
@@ -32,7 +32,7 @@ SOURCE_FILES = [{PLAIN + '1': 'source_json/test01.json',
                 {COMPLEX + '1': 'source_json/test11.json',
                  COMPLEX + '2': 'source_yml/test32.yaml'},
                 {HEXLET + '1': 'source_json/f1.json',
-                 HEXLET + '2': 'source_json/f2.json'}]
+                 HEXLET + '2': 'source_json/f2.json'})
 
 # files contain two scenarios for each style
 REPORTS = {REPORT_PLAIN:
@@ -58,9 +58,9 @@ RAW_DATA = {PLAIN + '1': PLAIN1_RAW_DATA,
 
 
 # merging of two files is a dictionary:
-COMPARISONS = {PLAIN: PLAIN_COMPARISON,
-               COMPLEX: COMPLEX_COMPARISON,
-               HEXLET: HEXLET_COMPARISON}
+COMPARISONS = ((PLAIN, PLAIN_COMPARISON),
+               (COMPLEX, COMPLEX_COMPARISON),
+               (HEXLET, HEXLET_COMPARISON))
 
 
 def get_fixture_path(file_name):
@@ -73,15 +73,28 @@ def get_raw_data():
     return RAW_DATA
 
 
-@pytest.fixture(scope='session')
-def get_source_files():
-    copy_source = []
-    for item in SOURCE_FILES:
-        file_pair = dict()
-        for key, value in item.items():
-            file_pair[key] = get_fixture_path(value)
-        copy_source.append(file_pair)
-    return copy_source
+@pytest.fixture(scope='session', params=SOURCE_FILES)
+def get_complexity_pair_files(request):
+    file_pair = []
+    for key, value in request.param.items():
+        file_pair.append(key[:-1])
+        file_pair.append(get_fixture_path(value))
+    file_pair.pop(2)
+    return tuple(file_pair)
+
+
+def get_source_file():
+    source_list = []
+    for pair_file in SOURCE_FILES:
+        for key, value in pair_file.items():
+            value = get_fixture_path(value)
+            source_list.append((key, value))
+    return tuple(source_list)
+
+
+@pytest.fixture(scope='session', params=get_source_file())
+def get_complexity_and_file(request):
+    return request.param
 
 
 @pytest.fixture(scope='session')
@@ -96,6 +109,14 @@ def get_reports():
     return reports
 
 
+@pytest.fixture(scope='session', params=COMPARISONS)
+def get_mergings(request):
+    return request.param
+
+
 @pytest.fixture(scope='session')
-def get_mergings():
-    return COMPARISONS
+def merging_versions():
+    mergings = dict()
+    for key, value in COMPARISONS:
+        mergings[key] = value
+    return mergings

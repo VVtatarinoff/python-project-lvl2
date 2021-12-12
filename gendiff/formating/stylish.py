@@ -1,12 +1,12 @@
 from gendiff.formating.converters import convert_stylish
 from itertools import chain
 
-from gendiff.parsing.parsing import ADD, DEL, KEPT, CHANGED
+from gendiff.compare_data.comparison_tree import ADD, DEL, KEPT, SPLIT
 
 SIGNS = {ADD: '+',
          DEL: '-',
          KEPT: ' ',
-         CHANGED: ' '}
+         SPLIT: ' '}
 
 
 def generate_report(comparison, converter, depth=0, supress_sign=None):

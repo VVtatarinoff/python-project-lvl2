@@ -1,6 +1,6 @@
 from itertools import chain
 
-from gendiff.parsing.parsing import ADD, KEPT, CHANGED, DEL
+from gendiff.compare_data.comparison_tree import ADD, KEPT, SPLIT, DEL
 from gendiff.formating.converters import convert_stylish
 
 RENAME_DICT = {ADD: "Property '{0}' was added with value: {1}",
@@ -44,7 +44,7 @@ def walker(data, pedigree=[]):
                 deleted = convert_value(data[opposite])
                 line.append(UPDATED.format(full_name, deleted, changed))
             continue
-        if sign == CHANGED:
+        if sign == SPLIT:
             line += chain(walker(value, parent))
         else:
             line.append(RENAME_DICT[sign].format(full_name, changed))
