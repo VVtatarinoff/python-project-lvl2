@@ -1,4 +1,4 @@
-from gendiff.formating.converters import convert_stylish
+from gendiff.formating.converters import convert_stylish as converter
 from itertools import chain
 
 from gendiff.compare_data.comparison_tree import ADD, DEL, KEPT, SPLIT
@@ -9,7 +9,7 @@ SIGNS = {ADD: '+',
          SPLIT: ' '}
 
 
-def generate_report(comparison, converter, depth=0, supress_sign=None):
+def generate_report(comparison, depth=0, supress_sign=None):
     CHAR = " "
     COUNT_CHARS = 2
     if not isinstance(comparison, dict):
@@ -22,10 +22,9 @@ def generate_report(comparison, converter, depth=0, supress_sign=None):
     for key, value in comparison.items():
         sign = key[1] if not supress_sign else supress_sign
         further_supress = KEPT if sign in {DEL, ADD, KEPT} else None
-        output_key = converter(key[0])
+        output_key = converter(key[0]) if not supress_sign else converter(key)
         indent = deep_indent + SIGNS[sign] + CHAR
         converted_value = generate_report(value,
-                                          converter,
                                           depth + 1,
                                           further_supress)
         lines.append(f'{indent}{output_key}: {converted_value}')
@@ -36,5 +35,4 @@ def generate_report(comparison, converter, depth=0, supress_sign=None):
 def generate_stylish(comparison):
     if not comparison:
         return ""
-    converter = convert_stylish
-    return generate_report(comparison, converter)
+    return generate_report(comparison)

@@ -11,11 +11,11 @@
         },
         "+ follow": false,
         "+ setting3": {
-            "  key": "value"
+            "  k": "value"
         },
         "+ setting4": "blah blah",
         "+ setting5": {
-            "  key5": "value5"
+            "  k": "value5"
         },
         "- setting2": 200,
         "- setting3": true
@@ -26,7 +26,7 @@
         "+ nest": "str",
         "- baz": "bas",
         "- nest": {
-            "  key": "value"
+            "  k": "value"
         }
     },
     "  group4": {
@@ -47,17 +47,17 @@
         "- type": "bas"
     },
     "+ group3": {
-        "  deep": {
-            "  id": {
-                "  number": 45
+        "  d": {
+            "  i": {
+                "  n": 45
             }
         },
-        "  fee": 100500
+        "  f": 100500
     },
     "- group2": {
-        "  abc": 12345,
-        "  deep": {
-            "  id": 45
+        "  a": 12345,
+        "  d": {
+            "  i": 45
         }
     }
 }

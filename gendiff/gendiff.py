@@ -7,6 +7,6 @@ from gendiff.formating.format_report import DEFAULT_STYLE
 def generate_diff(first_file, second_file, format=DEFAULT_STYLE):
     first_arguments = extract_raw_data(first_file)
     second_arguments = extract_raw_data(second_file)
-    parsed_data = create_comparison_tree(first_arguments, second_arguments)
-    report = generate_report(parsed_data, format)
+    comparison = create_comparison_tree(first_arguments, second_arguments)
+    report = generate_report(comparison, format)
     return report

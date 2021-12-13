@@ -14,12 +14,11 @@ COMPLEX_COMPARISON = {('common', SPLIT):
                        ('setting3', DEL): True,
                        ('setting3', ADD): None,
                        ('setting4', ADD): 'blah blah',
-                       ('setting5', ADD):
-                       {('key5', ADD): 'value5'},
+                       ('setting5', ADD): {'key5': 'value5'},
                        ('setting6', SPLIT):
                        {('doge', SPLIT):
                         {('wow', DEL): '',
-                         ('wow', ADD): 'so much'},
+                        ('wow', ADD): 'so much'},
                         ('key', KEPT): 'value',
                         ('ops', ADD): 'vops'}},
                       ('group1', SPLIT):
@@ -27,62 +26,53 @@ COMPLEX_COMPARISON = {('common', SPLIT):
                        ('baz', ADD): 'bars',
                        ('foo', KEPT): 'bar',
                        ('nest', DEL):
-                       {('key', DEL): 'value'},
+                       {'key': 'value'},
                        ('nest', ADD): 'str'},
                       ('group2', DEL):
-                      {('abc', DEL): 12345,
-                       ('deep', DEL):
-                       {('id', DEL): 45}},
+                      {'abc': 12345,
+                       'deep': {'id': 45}},
                       ('group3', ADD):
-                      {('deep', ADD):
-                       {('id', ADD):
-                        {('number', ADD): 45}},
-                       ('fee', ADD): 100500}}
+                      {'deep':
+                       {'id':
+                        {'number': 45}},
+                      'fee': 100500}}
 
-HEXLET_COMPARISON = {('common', SPLIT):
-                     {('follow', ADD): False,
-                      ('setting1', KEPT): 'Value 1',
-                      ('setting2', DEL): 200,
-                      ('setting3', DEL): True,
-                      ('setting3', ADD):
-                         {('key', ADD): 'value'},
-                      ('setting4', ADD): 'blah blah',
-                      ('setting5', ADD):
-                          {('key5', ADD): 'value5'},
-                      ('setting6', SPLIT):
-                          {('doge', SPLIT):
-                           {('wow', DEL): 'too much',
-                            ('wow', ADD): 'so much'},
-                           ('key', KEPT): 'value',
-                           ('ops', ADD): 'vops'}},
+HEXLET_COMPARISON = {('common', SPLIT): {('follow', ADD): False,
+                     ('setting1', KEPT): 'Value 1',
+                     ('setting2', DEL): 200,
+                     ('setting3', DEL): True,
+                     ('setting3', ADD): {'key': 'value'},
+                     ('setting4', ADD): 'blah blah',
+                     ('setting5', ADD): {'key5': 'value5'},
+                     ('setting6', SPLIT):
+                     {('doge', SPLIT):
+                      {('wow', DEL): 'too much',
+                       ('wow', ADD): 'so much'},
+                      ('key', KEPT): 'value',
+                      ('ops', ADD): 'vops'}},
                      ('group1', SPLIT):
-                         {('baz', DEL): 'bas',
-                          ('baz', ADD): 'bars',
-                          ('foo', KEPT): 'bar',
-                          ('nest', DEL):
-                              {('key', DEL): 'value'},
-                          ('nest', ADD): 'str'},
+                     {('baz', DEL): 'bas',
+                      ('baz', ADD): 'bars',
+                      ('foo', KEPT): 'bar',
+                      ('nest', DEL): {'key': 'value'},
+                      ('nest', ADD): 'str'},
                      ('group2', DEL):
-                         {('abc', DEL): 12345,
-                          ('deep', DEL):
-                              {('id', DEL): 45}},
+                     {'abc': 12345, 'deep': {'id': 45}},
                      ('group3', ADD):
-                         {('deep', ADD):
-                              {('id', ADD):
-                               {('number', ADD): 45}},
-                          ('fee', ADD): 100500},
+                     {'deep': {'id':
+                      {'number': 45}}, 'fee': 100500},
                      ('group4', SPLIT):
-                         {('default', DEL): None,
-                          ('default', ADD): '',
-                          ('foo', DEL): 0,
-                          ('foo', ADD): None,
-                          ('isNested', DEL): False,
-                          ('isNested', ADD): 'none',
-                          ('key', ADD): False,
-                          ('nest', SPLIT):
-                              {('bar', DEL): '',
-                               ('bar', ADD): 0,
-                               ('isNested', DEL): True},
-                          ('someKey', ADD): True,
-                          ('type', DEL): 'bas',
-                          ('type', ADD): 'bar'}}
+                     {('default', DEL): None,
+                      ('default', ADD): '',
+                      ('foo', DEL): 0,
+                      ('foo', ADD): None,
+                      ('isNested', DEL): False,
+                      ('isNested', ADD): 'none',
+                      ('key', ADD): False,
+                      ('nest', SPLIT):
+                      {('bar', DEL): '',
+                       ('bar', ADD): 0,
+                       ('isNested', DEL): True},
+                      ('someKey', ADD): True,
+                      ('type', DEL): 'bas',
+                      ('type', ADD): 'bar'}}
