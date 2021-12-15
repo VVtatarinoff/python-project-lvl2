@@ -4,13 +4,13 @@ from gendiff.formating.stylish import generate_stylish as stl
 import pytest
 
 
-@pytest.mark.parametrize("variants", ['plain', 'complex',
-                                      'hexlet'])
+@pytest.mark.parametrize("variant", ['plain', 'complex',
+                                     'hexlet'])
 @pytest.mark.parametrize("styles", [('json', js), ('plain', pl),
                                     ('stylish', stl)])
-def test_generate_format(styles, variants, get_reports, merging_versions):
+def test_generate_format(styles, variant, reports, merging_versions):
     style, func = styles
     assert func({}) == ""
-    expected_report = get_reports[style][variants]
-    generated_report = func(merging_versions[variants])
+    expected_report = reports[style][variant]
+    generated_report = func(merging_versions[variant])
     assert expected_report == generated_report

@@ -1,15 +1,17 @@
 from itertools import chain
 
-from gendiff.compare_data.comparison_tree import ADD, KEPT, SPLIT, DEL
-from gendiff.formating.converters import convert_stylish
+from gendiff.compare_data.comparison_tree import ADD, DEL, KEPT
+from gendiff.compare_data.comparison_tree import SPLIT, CHANGED
+from gendiff.compare_data.comparison_tree import STATUS, VALUE
+from gendiff.compare_data.comparison_tree import VALUE_INITIAL
+from gendiff.compare_data.comparison_tree import VALUE_MODIFIED
+
+from gendiff.formating.suplementary import convert_non_string as converter
+
 
 RENAME_DICT = {ADD: "Property '{0}' was added with value: {1}",
                DEL: "Property '{0}' was removed"}
 UPDATED = "Property '{0}' was updated. From {1} to {2}"
-
-
-def is_dict(argument):
-    return isinstance(argument, dict)
 
 
 def convert_value(argument):
@@ -18,7 +20,7 @@ def convert_value(argument):
         return f"'{argument}'"
     if type(argument) in complex_formats:
         return "[complex value]"
-    return str(convert_stylish(argument))
+    return str(converter(argument))
 
 
 def opposite_case(sign, value):
@@ -30,24 +32,21 @@ def opposite_case(sign, value):
 
 def walker(data, pedigree=[]):
     line = []
-    for key, value in data.items():
-        sign = key[1]
-        if sign == KEPT:
+    for name, match in data.items():
+        status = match[STATUS]
+        if status == KEPT:
             continue
-        name = key[0]
         parent = pedigree + [name]
         full_name = ".".join(parent)
-        opposite = opposite_case(sign, name)
-        changed = convert_value(value)
-        if opposite in data:
-            if sign == ADD:
-                deleted = convert_value(data[opposite])
-                line.append(UPDATED.format(full_name, deleted, changed))
-            continue
-        if sign == SPLIT:
-            line += chain(walker(value, parent))
+        if status == SPLIT:
+            line += chain(walker(match[VALUE], parent))
+        elif status == CHANGED:
+            deleted = convert_value(match[VALUE_INITIAL])
+            changed = convert_value(match[VALUE_MODIFIED])
+            line.append(UPDATED.format(full_name, deleted, changed))
         else:
-            line.append(RENAME_DICT[sign].format(full_name, changed))
+            changed = convert_value(match[VALUE])
+            line.append(RENAME_DICT[status].format(full_name, changed))
     return line
 
 

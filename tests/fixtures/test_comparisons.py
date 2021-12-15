@@ -1,78 +1,191 @@
-from gendiff.compare_data.comparison_tree import ADD, DEL, KEPT, SPLIT
+from gendiff.compare_data.comparison_tree import ADD, DEL, KEPT, SPLIT, CHANGED
 
-PLAIN_COMPARISON = {('follow', DEL): False,
-                    ('host', KEPT): 'hexlet.io',
-                    ('proxy', DEL): '123.234.53.22',
-                    ('timeout', DEL): 50,
-                    ('timeout', ADD): 20,
-                    ('verbose', ADD): True}
+PLAIN_COMPARISON = {'follow':
+                    {'status': DEL,
+                     'value': False},
+                    'host':
+                    {'status': KEPT,
+                     'value': 'hexlet.io'},
+                    'proxy':
+                    {'status': DEL,
+                     'value': '123.234.53.22'},
+                    'timeout':
+                    {'status': CHANGED,
+                     'value_inintial': 50,
+                     'value_modified': 20},
+                    'verbose':
+                    {'status': ADD,
+                     'value': True}}
 
-COMPLEX_COMPARISON = {('common', SPLIT):
-                      {('follow', ADD): False,
-                       ('setting1', KEPT): 'Value 1',
-                       ('setting2', DEL): 200,
-                       ('setting3', DEL): True,
-                       ('setting3', ADD): None,
-                       ('setting4', ADD): 'blah blah',
-                       ('setting5', ADD): {'key5': 'value5'},
-                       ('setting6', SPLIT):
-                       {('doge', SPLIT):
-                        {('wow', DEL): '',
-                        ('wow', ADD): 'so much'},
-                        ('key', KEPT): 'value',
-                        ('ops', ADD): 'vops'}},
-                      ('group1', SPLIT):
-                      {('baz', DEL): 'bas',
-                       ('baz', ADD): 'bars',
-                       ('foo', KEPT): 'bar',
-                       ('nest', DEL):
-                       {'key': 'value'},
-                       ('nest', ADD): 'str'},
-                      ('group2', DEL):
-                      {'abc': 12345,
-                       'deep': {'id': 45}},
-                      ('group3', ADD):
-                      {'deep':
-                       {'id':
-                        {'number': 45}},
-                      'fee': 100500}}
+COMPLEX_COMPARISON = {'common':
+                      {'status': SPLIT,
+                       'value':
+                       {'follow':
+                        {'status': ADD,
+                         'value': False},
+                        'setting1':
+                        {'status': KEPT,
+                         'value': 'Value 1'},
+                        'setting2':
+                        {'status': DEL,
+                         'value': 200},
+                        'setting3':
+                        {'status': CHANGED,
+                         'value_inintial': True,
+                         'value_modified': None},
+                        'setting4':
+                        {'status': ADD,
+                         'value': 'blah blah'},
+                        'setting5':
+                        {'status': ADD,
+                         'value':
+                         {'key5': 'value5'}},
+                        'setting6':
+                        {'status': SPLIT,
+                         'value':
+                         {'doge':
+                          {'status': SPLIT,
+                           'value':
+                           {'wow':
+                            {'status': CHANGED,
+                             'value_inintial': '',
+                             'value_modified': 'so much'}}},
+                          'key':
+                          {'status': KEPT,
+                           'value': 'value'},
+                          'ops':
+                          {'status': ADD,
+                           'value': 'vops'}}}}},
+                      'group1':
+                      {'status': SPLIT,
+                          'value':
+                          {'baz':
+                           {'status': CHANGED,
+                            'value_inintial': 'bas',
+                            'value_modified': 'bars'},
+                           'foo':
+                           {'status': KEPT,
+                            'value': 'bar'},
+                           'nest':
+                           {'status': CHANGED,
+                            'value_inintial':
+                            {'key': 'value'},
+                            'value_modified': 'str'}}},
+                      'group2':
+                      {'status': DEL,
+                       'value':
+                       {'abc': 12345,
+                        'deep':
+                        {'id': 45}}},
+                      'group3':
+                      {'status': ADD,
+                       'value':
+                       {'deep':
+                        {'id':
+                         {'number': 45}},
+                        'fee': 100500}}}
 
-HEXLET_COMPARISON = {('common', SPLIT): {('follow', ADD): False,
-                     ('setting1', KEPT): 'Value 1',
-                     ('setting2', DEL): 200,
-                     ('setting3', DEL): True,
-                     ('setting3', ADD): {'key': 'value'},
-                     ('setting4', ADD): 'blah blah',
-                     ('setting5', ADD): {'key5': 'value5'},
-                     ('setting6', SPLIT):
-                     {('doge', SPLIT):
-                      {('wow', DEL): 'too much',
-                       ('wow', ADD): 'so much'},
-                      ('key', KEPT): 'value',
-                      ('ops', ADD): 'vops'}},
-                     ('group1', SPLIT):
-                     {('baz', DEL): 'bas',
-                      ('baz', ADD): 'bars',
-                      ('foo', KEPT): 'bar',
-                      ('nest', DEL): {'key': 'value'},
-                      ('nest', ADD): 'str'},
-                     ('group2', DEL):
-                     {'abc': 12345, 'deep': {'id': 45}},
-                     ('group3', ADD):
-                     {'deep': {'id':
-                      {'number': 45}}, 'fee': 100500},
-                     ('group4', SPLIT):
-                     {('default', DEL): None,
-                      ('default', ADD): '',
-                      ('foo', DEL): 0,
-                      ('foo', ADD): None,
-                      ('isNested', DEL): False,
-                      ('isNested', ADD): 'none',
-                      ('key', ADD): False,
-                      ('nest', SPLIT):
-                      {('bar', DEL): '',
-                       ('bar', ADD): 0,
-                       ('isNested', DEL): True},
-                      ('someKey', ADD): True,
-                      ('type', DEL): 'bas',
-                      ('type', ADD): 'bar'}}
+HEXLET_COMPARISON = {'common':
+                     {'status': SPLIT,
+                      'value':
+                      {'follow':
+                       {'status': ADD,
+                        'value': False},
+                       'setting1':
+                       {'status': KEPT,
+                        'value': 'Value 1'},
+                       'setting2':
+                       {'status': DEL,
+                        'value': 200},
+                       'setting3':
+                       {'status': CHANGED,
+                        'value_inintial': True,
+                        'value_modified':
+                        {'key': 'value'}},
+                       'setting4':
+                       {'status': ADD,
+                        'value': 'blah blah'},
+                       'setting5':
+                       {'status': ADD,
+                        'value':
+                        {'key5':
+                         'value5'}},
+                       'setting6':
+                           {'status': SPLIT,
+                            'value':
+                            {'doge':
+                             {'status': SPLIT,
+                              'value':
+                              {'wow':
+                               {'status': CHANGED,
+                                'value_inintial': 'too much',
+                                'value_modified': 'so much'}}},
+                             'key':
+                             {'status': KEPT,
+                              'value': 'value'},
+                             'ops':
+                             {'status': ADD,
+                              'value': 'vops'}}}}},
+                     'group1':
+                     {'status': SPLIT,
+                      'value':
+                      {'baz':
+                       {'status': CHANGED,
+                        'value_inintial': 'bas',
+                        'value_modified': 'bars'},
+                       'foo':
+                       {'status': KEPT,
+                        'value': 'bar'},
+                       'nest':
+                       {'status': CHANGED,
+                        'value_inintial':
+                        {'key': 'value'},
+                        'value_modified': 'str'}}},
+                     'group2':
+                         {'status': DEL,
+                          'value':
+                          {'abc': 12345,
+                           'deep':
+                           {'id': 45}}},
+                     'group3':
+                         {'status': ADD,
+                          'value':
+                          {'deep':
+                           {'id':
+                            {'number': 45}},
+                           'fee': 100500}},
+                     'group4':
+                         {'status': SPLIT,
+                          'value':
+                          {'default':
+                           {'status': CHANGED,
+                            'value_inintial': None,
+                            'value_modified': ''},
+                           'foo':
+                           {'status': CHANGED,
+                            'value_inintial': 0,
+                            'value_modified': None},
+                           'isNested':
+                           {'status': CHANGED,
+                            'value_inintial': False,
+                            'value_modified': 'none'},
+                           'key':
+                           {'status': ADD,
+                            'value': False},
+                           'nest':
+                           {'status': SPLIT,
+                            'value':
+                            {'bar':
+                             {'status': CHANGED,
+                              'value_inintial': '',
+                              'value_modified': 0},
+                             'isNested':
+                             {'status': DEL,
+                              'value': True}}},
+                           'someKey':
+                           {'status': ADD,
+                            'value': True},
+                           'type':
+                           {'status': CHANGED,
+                            'value_inintial': 'bas',
+                            'value_modified': 'bar'}}}}

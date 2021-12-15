@@ -8,7 +8,7 @@ CHOICES = {'stylish': styl.generate_stylish,
 DEFAULT_STYLE = 'stylish'
 
 
-def generate_report(data, style=None):
+def generate_report(data, style):
     if style not in CHOICES.keys():
         return "not supported format"
     return(CHOICES[style](data))

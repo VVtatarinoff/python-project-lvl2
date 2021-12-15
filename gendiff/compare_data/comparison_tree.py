@@ -1,31 +1,17 @@
-ADD = '+'
-DEL = '-'
-KEPT = ' '
-SPLIT = '?'
+ADD = 'ADDED'
+DEL = 'DELETED'
+KEPT = 'NOT_CHANGED'
+SPLIT = ' '
+CHANGED = "UPDATED"
+
+STATUS = 'status'
+VALUE = 'value'
+VALUE_INITIAL = 'value_inintial'
+VALUE_MODIFIED = 'value_modified'
 
 
 def is_dict(argument):
     return isinstance(argument, dict)
-
-
-"""
-Итог функции - промежуточные данные, используемые для построения отчета
-По сути - объединение двух словарей, получается древовидная структура
-В объединенном словаре в качестве ключа выступает tuple, первое значение - ключ
-из источника, второе значение - символ, означающий
-'+' - ключа не было в первом источнике, либо значение изменилось
-'-' - ключа не было во втором источнике, либо значение изменилось
-
-Таким образом, если ключ сохранился, но значение изменилось, в результирующем
-дереве получаются две сущности (с минусом и с плюсом)
-' ' - ключи и значения совпадают
-'?' - специальный случай: ключи совпадают, но значение и в первом и
-        во втором массиве данных - сами являются словарями. Таким образом,
-        это раздвоение
-Логика символов повторяет stylish отчет, но легко используется для других
-отчетов
-
-"""
 
 
 def create_comparison_tree(arg1, arg2): # noqa C901
@@ -37,16 +23,19 @@ def create_comparison_tree(arg1, arg2): # noqa C901
     dif_dict = {}
     for key in keys:
         if key not in arg1:
-            dif_dict[(key, ADD)] = arg2[key]
+            dif_dict[key] = {STATUS: ADD, VALUE: arg2[key]}
         elif key not in arg2:
-            dif_dict[(key, DEL)] = arg1[key]
+            dif_dict[key] = {STATUS: DEL, VALUE: arg1[key]}
         elif arg1[key] == arg2[key]:
-            dif_dict[(key, KEPT)] = arg1[key]
+            dif_dict[key] = {STATUS: KEPT, VALUE: arg1[key]}
+        # случаи присутствия ключей в обоих словарях и
+        # неравенства значений
+        elif is_dict(arg1[key]) and is_dict(arg2[key]):
+            dif_dict[key] = {STATUS: SPLIT,
+                             VALUE: create_comparison_tree(arg1[key],
+                                                           arg2[key])}
         else:
-            if is_dict(arg1[key]) and is_dict(arg2[key]):
-                dif_dict[(key, SPLIT)] = create_comparison_tree(arg1[key],
-                                                                arg2[key])
-            else:
-                dif_dict[(key, DEL)] = arg1[key]
-                dif_dict[(key, ADD)] = arg2[key]
+            dif_dict[key] = {STATUS: CHANGED,
+                             VALUE_INITIAL: arg1[key],
+                             VALUE_MODIFIED: arg2[key]}
     return dif_dict

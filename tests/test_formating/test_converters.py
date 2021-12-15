@@ -1,12 +1,12 @@
-import gendiff.formating.converters as cv
+import gendiff.formating.suplementary as cv
 
 
-def test_convert_stylish_bool():
-    assert cv.convert_stylish(True) == 'true'
-    assert cv.convert_stylish(False) == 'false'
+def test_convert_non_string_bool():
+    assert cv.convert_non_string(True) == 'true'
+    assert cv.convert_non_string(False) == 'false'
 
 
-def test_convert_stylish_others():
-    assert cv.convert_stylish(None) == 'null'
-    assert cv.convert_stylish("Text") == 'Text'
-    assert cv.convert_stylish(10) == '10'
+def test_convert_non_string_others():
+    assert cv.convert_non_string(None) == 'null'
+    assert cv.convert_non_string("Text") == 'Text'
+    assert cv.convert_non_string(10) == '10'

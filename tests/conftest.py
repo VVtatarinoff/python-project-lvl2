@@ -25,7 +25,7 @@ SOURCE_FILES = ({PLAIN + '1': 'source_json/test01.json',
                  PLAIN + '2': 'source_json/test02.json'},
                 {COMPLEX + '1': 'source_json/test11.json',
                  COMPLEX + '2': 'source_json/test12.json'},
-                {PLAIN + '1': 'source_yml/test21.yml',
+                {PLAIN + '1': 'source_yml/test21.yaml',
                  PLAIN + '2': 'source_yml/test22.yaml'},
                 {COMPLEX + '1': 'source_yml/test31.yml',
                  COMPLEX + '2': 'source_yml/test32.yaml'},
@@ -69,12 +69,12 @@ def get_fixture_path(file_name):
 
 
 @pytest.fixture(scope='session')
-def get_raw_data():
+def raw_data():
     return RAW_DATA
 
 
 @pytest.fixture(scope='session', params=SOURCE_FILES)
-def get_complexity_pair_files(request):
+def complexity_pair_files(request):
     file_pair = []
     for key, value in request.param.items():
         file_pair.append(key[:-1])
@@ -83,7 +83,7 @@ def get_complexity_pair_files(request):
     return tuple(file_pair)
 
 
-def get_source_file():
+def source_file():
     source_list = []
     for pair_file in SOURCE_FILES:
         for key, value in pair_file.items():
@@ -92,13 +92,13 @@ def get_source_file():
     return tuple(source_list)
 
 
-@pytest.fixture(scope='session', params=get_source_file())
-def get_complexity_and_file(request):
+@pytest.fixture(scope='session', params=source_file())
+def complexity_and_file(request):
     return request.param
 
 
 @pytest.fixture(scope='session')
-def get_reports():
+def reports():
     reports = dict()
     for style, files in REPORTS.items():
         one_style_reports = dict()
@@ -110,7 +110,7 @@ def get_reports():
 
 
 @pytest.fixture(scope='session', params=COMPARISONS)
-def get_mergings(request):
+def mergings(request):
     return request.param
 
 
