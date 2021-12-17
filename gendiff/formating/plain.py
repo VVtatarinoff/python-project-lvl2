@@ -23,13 +23,6 @@ def convert_value(argument):
     return str(converter(argument))
 
 
-def opposite_case(sign, value):
-    opposite_signs = {ADD: DEL, DEL: ADD}
-    if sign in opposite_signs:
-        return (value, opposite_signs[sign])
-    return (value, object())
-
-
 def walker(data, pedigree=[]):
     line = []
     for name, match in data.items():
