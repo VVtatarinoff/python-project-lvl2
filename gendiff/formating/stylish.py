@@ -20,50 +20,57 @@ def is_dict(argument):
     return isinstance(argument, dict)
 
 
-def converter_value(source, indent):
-    lines = []
+def get_indent(depth):
+    return ' ' * (depth * ZERO_INDENT + SIGN_INDENT)
+
+
+def get_value_indent(depth):
+    return ' ' * (depth * ZERO_INDENT + SIGN_INDENT * 2)
+
+
+def convert_value(source, depth):
+    if not is_dict(source):
+        return converter(source)
+    indent = get_value_indent(depth)
+    lines = ['{']
     for key, value in source.items():
-        if is_dict(value):
-            current_line = [STRING.format(indent, key, "{")]
-            current_line += converter_value(value, indent + ZERO_INDENT * " ")
-        else:
-            current_line = [STRING.format(indent, key, converter(value))]
+        current_line = [STRING.format(indent, key,
+                                      convert_value(value,
+                                                    depth + 1))]
         lines += current_line
-    lines.append(indent[:-ZERO_INDENT] + '}')
-    return lines
+    lines.append(get_value_indent(depth - 1) + '}')
+    return '\n'.join(lines)
 
 
-def generate_report(data, depth=0):
+def generate_nodes(node, depth):
+    indent = get_indent(depth)
+    key, match = node
+    status = match[STATUS]
+    if status == SPLIT:
+        return [STRING.format(indent + ' ' * SIGN_INDENT,
+                              key, generate_stylish(match[VALUE],
+                                                    depth + 1))]
+    if status == CHANGED:
+        values = {SIGNS[DEL]: match[VALUE_INITIAL],
+                  SIGNS[ADD]: match[VALUE_MODIFIED]}
+    else:
+        values = {SIGNS[status]: match[VALUE]}
     lines = []
-    indent = ' ' * (depth * ZERO_INDENT + SIGN_INDENT)
-    for key, match in data.items():
-        status = match[STATUS]
-        if status == SPLIT:
-            deep_lines = generate_report(match[VALUE], depth + 1)
-            lines.append(STRING.format(indent + ' ' * SIGN_INDENT, key, '{'))
-            lines += deep_lines
-            continue
-        if status == CHANGED:
-            values = {SIGNS[DEL]: match[VALUE_INITIAL],
-                      SIGNS[ADD]: match[VALUE_MODIFIED]}
-        else:
-            values = {SIGNS[status]: match[VALUE]}
-        for sign, value in values.items():
-            if is_dict(value):
-                lines.append(STRING.format(indent + sign, key, '{'))
-                deep_indent = indent + (ZERO_INDENT + 2) * " "
-                deep_lines = converter_value(value, deep_indent)
-                lines += deep_lines
-            else:
-                lines.append(STRING.format(indent + sign,
-                                           key,
-                                           converter(value)))
-    lines.append(indent[:-SIGN_INDENT] + '}')
+    for sign, value in values.items():
+        line = STRING.format(indent + sign, key,
+                             convert_value(value, depth + 1))
+        lines.append(line)
     return lines
 
 
-def generate_stylish(comparison):
+def generate_stylish(comparison, depth=0):
     if not comparison:
         return ""
-    lines = ['{'] + generate_report(comparison)
+    indent = get_indent(depth)
+    lines = ['{']
+    for node in comparison.items():
+        line = generate_nodes(node, depth)
+        lines += line
+    indent_less_sign = indent[:-SIGN_INDENT]
+    lines.append(indent_less_sign + '}')
     return '\n'.join(lines)
